@@ -1,6 +1,5 @@
 package com.mohamadjavad.link.user
 
-import com.mohamadjavad.link.util.Empty
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -20,20 +19,26 @@ data class UserEntity(
         strategy = "org.hibernate.id.UUIDGenerator"
     )
     @GeneratedValue(generator = "UUID")
-    val id: UUID = UUID.randomUUID(),
+    val id: UUID? = null,
 
     @Column(
         nullable = false,
         updatable = false,
+        unique = true,
     )
-    val email: String = String.Empty,
+    val email: String? = null,
 
-    @Column(nullable = true)
+    @Column(
+        nullable = true,
+        updatable = true,
+    )
     val username: String? = null,
 )
 
-fun UserEntity.toDomain() = User(
-    id = id,
-    email = email,
-    username = username
-)
+fun UserEntity.toDomain(): User {
+    return User(
+        id = id!!,
+        email = email!!,
+        username = username
+    )
+}

@@ -17,12 +17,13 @@ class UserService(private val userRepository: UserRepository) {
         return userRepository.findById(id).map(UserEntity::toDomain).orElseThrow { NotFoundException() }
     }
 
-    fun createUser(userCreateRequest: UserCreateRequest): UserEntity {
+    fun createUser(userCreateRequest: UserCreateRequest): User {
         return userRepository.save(
             UserEntity(
-                email = userCreateRequest.email
+                email = userCreateRequest.email,
+                username = userCreateRequest.username,
             )
-        )
+        ).toDomain()
     }
 
     fun updateUser(userUpdateRequest: UserUpdateRequest): User {
