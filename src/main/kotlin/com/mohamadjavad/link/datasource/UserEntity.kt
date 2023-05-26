@@ -1,9 +1,7 @@
-package com.mohamadjavad.link.user
+package com.mohamadjavad.link.datasource
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.Id
+import com.mohamadjavad.link.user.User
+import jakarta.persistence.*
 import org.hibernate.annotations.GenericGenerator
 import java.util.*
 
@@ -29,16 +27,26 @@ data class UserEntity(
     val email: String? = null,
 
     @Column(
-        nullable = true,
+        nullable = false,
         updatable = true,
     )
     val username: String? = null,
+
+    @OneToMany(
+        mappedBy = "owner",
+        cascade = [CascadeType.ALL],
+        fetch = FetchType.LAZY
+    )
+    @Column(
+        nullable = false,
+        updatable = true,
+    )
+    val notes: MutableList<NoteEntity>? = null
 )
 
-fun UserEntity.toDomain(): User {
-    return User(
-        id = id!!,
-        email = email!!,
-        username = username
-    )
-}
+fun UserEntity.toDomain(): User = User(
+    id = id!!,
+    email = email!!,
+    username = username,
+    notes = lazy { notes!!.map(NoteEntity::toDomain) }
+)
