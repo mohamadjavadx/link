@@ -1,42 +1,38 @@
 package com.mohamadjavad.link.user
 
-import com.mohamadjavad.link.user.request.UserCreateRequest
-import com.mohamadjavad.link.user.request.UserUpdateRequest
-import com.mohamadjavad.link.util.NotFoundException
+import com.mohamadjavad.link.util.NotAuthorizedException
+import org.springframework.data.domain.Example
 import org.springframework.stereotype.Service
 import java.util.*
+import kotlin.jvm.optionals.getOrNull
 
+@OptIn(ExperimentalStdlibApi::class)
 @Service
-class UserService(private val userRepository: UserRepository) {
-
+class UserService(
+    private val userRepository: UserRepository,
+) {
     fun getAllUsers(): List<User> {
         return userRepository.findAll().map(UserEntity::toDomain)
     }
 
     fun getUserById(id: UUID): User {
-        return userRepository.findById(id).map(UserEntity::toDomain).orElseThrow { NotFoundException() }
+        return userRepository.findById(id).map(UserEntity::toDomain).orElseThrow { NotAuthorizedException() }
     }
 
-    fun createUser(userCreateRequest: UserCreateRequest): User {
+    fun findUserByEmail(email: String): User? {
+        return userRepository.findOne(Example.of(UserEntity(email = email))).getOrNull()?.toDomain()
+    }
+
+    fun createUser(email: String): User {
         return userRepository.save(
             UserEntity(
-                email = userCreateRequest.email,
-                username = userCreateRequest.username,
+                email = email
             )
         ).toDomain()
-    }
-
-    fun updateUser(userUpdateRequest: UserUpdateRequest): User {
-        return userRepository.findById(userUpdateRequest.id).map {
-            userRepository.save(
-                it.copy(
-                    username = userUpdateRequest.username
-                )
-            ).toDomain()
-        }.orElseThrow { NotFoundException() }
     }
 
     fun deleteUser(id: UUID) {
         userRepository.deleteById(id)
     }
+
 }

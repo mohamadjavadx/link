@@ -1,9 +1,9 @@
 package com.mohamadjavad.link.user
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.Id
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.mohamadjavad.link.note.NoteEntity
+import com.mohamadjavad.link.note.toDomain
+import jakarta.persistence.*
 import org.hibernate.annotations.GenericGenerator
 import java.util.*
 
@@ -28,17 +28,23 @@ data class UserEntity(
     )
     val email: String? = null,
 
+    @JsonIgnore
+    @OneToMany(
+        mappedBy = "owner",
+        cascade = [CascadeType.ALL],
+        fetch = FetchType.EAGER
+    )
     @Column(
         nullable = true,
         updatable = true,
     )
-    val username: String? = null,
+    val notes: MutableList<NoteEntity>? = null,
 )
 
 fun UserEntity.toDomain(): User {
     return User(
         id = id!!,
         email = email!!,
-        username = username
+        notes = notes?.map(NoteEntity::toDomain).orEmpty()
     )
 }
