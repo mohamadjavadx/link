@@ -23,7 +23,7 @@ data class NoteEntity(
     val id: UUID? = null,
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
         nullable = false,
         updatable = false,
@@ -41,11 +41,15 @@ data class NoteEntity(
     val content: String? = null,
 )
 
-fun NoteEntity.toDomain(): Note {
-    return Note(
-        id = id!!,
-        ownerId = owner!!.id!!,
-        title = title!!,
-        content = content!!,
-    )
-}
+fun NoteEntity.toDomain() = Note(
+    id = id!!,
+    ownerId = owner!!.id!!,
+    title = title!!,
+    content = content!!,
+)
+
+fun NoteEntity.toDto() = NoteDto(
+    id = id!!,
+    title = title!!,
+    content = content!!,
+)

@@ -4,6 +4,7 @@ import jakarta.validation.Valid
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
+import java.util.*
 
 @RestController
 @RequestMapping("/note")
@@ -13,22 +14,40 @@ class NoteController(
     private val noteService: NoteService
 ) {
 
-    @PostMapping("/all")
+    @GetMapping
     fun getAllNotes(
         @Valid
         @RequestBody
         getAllNotesRequest: GetAllNotesRequest,
-    ): List<Note> {
-        return noteService.getAllNotesByUser(getAllNotesRequest)
+    ): List<NoteDto> {
+        return noteService.getAllNotes(getAllNotesRequest)
     }
 
     @PostMapping
-    fun insertOne(
+    fun insert(
         @Valid
         @RequestBody
-        insertNoteRequest:InsertNoteRequest,
-    ): Note{
+        insertNoteRequest: InsertNoteRequest,
+    ): NoteDto {
         return noteService.insert(insertNoteRequest)
+    }
+
+    @PutMapping
+    fun update(
+        @Valid
+        @RequestBody
+        updateNoteRequest: UpdateNoteRequest,
+    ): NoteDto {
+        return noteService.update(updateNoteRequest)
+    }
+
+    @DeleteMapping
+    fun delete(
+        @Valid
+        @RequestBody
+        deleteNoteRequest: DeleteNoteRequest,
+    ): UUID {
+        return noteService.delete(deleteNoteRequest)
     }
 
 }

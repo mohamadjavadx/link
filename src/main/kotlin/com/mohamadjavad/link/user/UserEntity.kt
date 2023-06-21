@@ -3,6 +3,7 @@ package com.mohamadjavad.link.user
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.mohamadjavad.link.note.NoteEntity
 import com.mohamadjavad.link.note.toDomain
+import com.mohamadjavad.link.note.toDto
 import jakarta.persistence.*
 import org.hibernate.annotations.GenericGenerator
 import java.util.*
@@ -32,7 +33,7 @@ data class UserEntity(
     @OneToMany(
         mappedBy = "owner",
         cascade = [CascadeType.ALL],
-        fetch = FetchType.EAGER
+        fetch = FetchType.LAZY
     )
     @Column(
         nullable = true,
@@ -41,10 +42,14 @@ data class UserEntity(
     val notes: MutableList<NoteEntity>? = null,
 )
 
-fun UserEntity.toDomain(): User {
-    return User(
-        id = id!!,
-        email = email!!,
-        notes = notes?.map(NoteEntity::toDomain).orEmpty()
-    )
-}
+fun UserEntity.toDomain() = User(
+    id = id!!,
+    email = email!!,
+    notes = notes?.map(NoteEntity::toDomain).orEmpty()
+)
+
+fun UserEntity.toDto() = UserDto(
+    id = id!!,
+    email = email!!,
+    notes = notes?.map(NoteEntity::toDto).orEmpty()
+)

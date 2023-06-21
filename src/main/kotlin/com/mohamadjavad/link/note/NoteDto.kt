@@ -2,9 +2,14 @@ package com.mohamadjavad.link.note
 
 import java.util.*
 
-class Note(
+class NoteDto(
     val id: UUID,
-    val ownerId: UUID,
     val title: String,
     val content: String,
+)
+
+fun Note.toDto(): NoteDto = NoteDto(
+    id = id,
+    title = title,
+    content = content
 )
