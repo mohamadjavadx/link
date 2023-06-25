@@ -3,6 +3,7 @@ package com.mohamadjavad.link.note
 import com.mohamadjavad.link.user.UserRepository
 import com.mohamadjavad.link.user.UserService
 import com.mohamadjavad.link.util.NotAuthorizedException
+import com.mohamadjavad.link.util.NotFoundException
 import org.springframework.stereotype.Service
 import java.util.*
 import kotlin.jvm.optionals.getOrElse
@@ -55,6 +56,10 @@ class NoteService(
     fun delete(deleteNoteRequest: DeleteNoteRequest): UUID {
         userRepository.findById(deleteNoteRequest.userId).getOrElse {
             throw NotAuthorizedException()
+        }
+
+        noteRepository.findById(deleteNoteRequest.id).getOrElse {
+            throw NotFoundException()
         }
 
         noteRepository.deleteById(deleteNoteRequest.id)

@@ -12,12 +12,16 @@ class EmailService(private val mailSender: JavaMailSender) {
 
     fun sendEmail(to: String, subject: String, body: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            val message = SimpleMailMessage().apply {
-                setTo(to)
-                this.subject = subject
-                this.text = body
+            runCatching {
+                val message = SimpleMailMessage().apply {
+                    setTo(to)
+                    this.subject = subject
+                    this.text = body
+                }
+                mailSender.send(message)
+            }.onFailure {
+                throw UnknownError()
             }
-            mailSender.send(message)
         }
     }
 
