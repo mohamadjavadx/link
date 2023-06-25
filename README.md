@@ -18,7 +18,7 @@ Note: The application's functionality is exposed via API endpoints that can be a
 Note: When making requests to these APIs, ensure that the userId is included in the request body to access and perform operations on the notes associated with that specific user.
 
 Also a postman collection is available, please import it in postman to understand how apis works, what are the responses and requests should be look like.
-
+(https://github.com/mohamadjavadx/link/blob/master/link.postman_collection.json)
 
 
 
