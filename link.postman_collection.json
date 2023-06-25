@@ -1,0 +1,200 @@
+{
+	"info": {
+		"_postman_id": "7934af85-ee5f-41b9-8c01-e1a3ebe578d1",
+		"name": "link",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "authenticate request-verification-code",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"mohamadjavad.pourmoradian@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8118/authenticate/request-verification-code",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8118",
+					"path": [
+						"authenticate",
+						"request-verification-code"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "authenticate finalize-authentication",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"mohamadjavad.pourmoradian@gmail.com\",\r\n    \"code\": \"792565\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8118/authenticate/finalize-authentication",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8118",
+					"path": [
+						"authenticate",
+						"finalize-authentication"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "save a new note",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": \"afc3915f-0d5d-4875-9378-7b72c818661d\",\r\n    \"title\": \"first note\",\r\n    \"content\": \"this is my first note\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8118/note",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8118",
+					"path": [
+						"note"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all notes",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": \"afc3915f-0d5d-4875-9378-7b72c818661d\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8118/note",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8118",
+					"path": [
+						"note"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update a note",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"32897541-d405-4ca4-b209-81be25fac83e\",\r\n    \"userId\": \"afc3915f-0d5d-4875-9378-7b72c818661d\",\r\n    \"title\": \"first note\",\r\n    \"content\": \"this is just a note\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8118/note",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8118",
+					"path": [
+						"note"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete a note",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": \"afc3915f-0d5d-4875-9378-7b72c818661d\",\r\n    \"id\": \"32897541-d405-4ca4-b209-81be25fac83e\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8118/note",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8118",
+					"path": [
+						"note"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
